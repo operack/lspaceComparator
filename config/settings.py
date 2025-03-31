@@ -43,6 +43,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'apps.authentication',
     'apps.dashboard',
+    'crispy_forms',
+    'crispy_bootstrap5',
+    'django_tables2',
 ]
 
 MIDDLEWARE = [
@@ -131,3 +134,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = 'dashboard/'
 LOGOUT_REDIRECT_URL = '/authentication/login/'
 LOGIN_URL = '/authentication/login/'
+DATA_UPLOAD_MAX_NUMBER_FIELDS = 100000
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap5"

@@ -1,2 +1,8 @@
 django==5.1.6
 python-dotenv==1.0.1
+django-fsm
+django-extensions
+openpyxl
+django-crispy-forms
+crispy-bootstrap5
+django-tables2
