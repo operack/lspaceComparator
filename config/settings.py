@@ -138,3 +138,7 @@ DATA_UPLOAD_MAX_NUMBER_FIELDS = 100000
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://lspace-compare.operack.com",
+]
