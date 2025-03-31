@@ -29,7 +29,7 @@ ON_PRODUCTION = os.environ.get('ON_PRODUCTION', False)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['lspace-compare.operack.com']
 
 
 # Application definition
