@@ -6,3 +6,4 @@ openpyxl
 django-crispy-forms
 crispy-bootstrap5
 django-tables2
+gunicorn
