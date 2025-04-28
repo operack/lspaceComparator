@@ -7,3 +7,5 @@ django-crispy-forms
 crispy-bootstrap5
 django-tables2
 gunicorn
+dj-database-url
+psycopg2-binary
