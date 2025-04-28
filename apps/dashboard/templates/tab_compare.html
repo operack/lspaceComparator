@@ -1,0 +1,61 @@
+{% extends 'frames/internal.html' %}
+{% load crispy_forms_tags %}
+
+{% block body %}
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+
+      <!-- File Upload Section -->
+      <div class="card shadow-sm mb-4">
+        <div class="card-header bg-light">
+          <h5 class="mb-0">📤 Upload Report</h5>
+        </div>
+        <div class="card-body">
+          <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <div class="d-grid gap-2">
+              <button type="submit" class="btn btn-primary">Upload & Compare</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Missing Items Section -->
+      {% if missing_items %}
+      <div class="card shadow-sm">
+        <div class="card-header bg-warning">
+          <h5 class="mb-0">⚠️ Missing Items Found</h5>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-bordered table-striped table-hover mb-0">
+              <thead class="table-light">
+                <tr>
+                  <th scope="col" class="text-center">#</th>
+                  <th scope="col">Item Name</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for item in missing_items %}
+                <tr>
+                  <td class="text-center">{{ forloop.counter }}</td>
+                  <td>{{ item }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      {% elif missing_items is not none %}
+      <div class="alert alert-success mt-4" role="alert">
+        ✅ No missing items found. Everything matches!
+      </div>
+      {% endif %}
+
+    </div>
+  </div>
+</div>
+{% endblock %}

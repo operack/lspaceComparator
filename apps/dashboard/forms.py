@@ -15,6 +15,14 @@ class UploadReportForm(forms.Form):
         required=True,
         widget=forms.ClearableFileInput(attrs={"class": "form-control"})
     )
+
+class UploadTabReportForm(forms.Form):
+    file = forms.FileField(
+        label="Upload Excel File",
+        required=True,
+        widget=forms.ClearableFileInput(attrs={"class": "form-control"})
+    )
+
 # forms.py
 class ManualReportForm(forms.ModelForm):
     class Meta:

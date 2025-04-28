@@ -6,6 +6,7 @@ app_name = "dashboard"
 urlpatterns = [
     # Dashboard
     path('', views.DashboardView.as_view(), name='dashboard'),
+    path('tab_compare', views.TabCompareView.as_view(), name='tab_compare'),
     path('reports', views.ReportListView.as_view(), name='reports'),
 
     path("reports/<int:pk>/", views.ReportDetailView.as_view(), name="report-detail"),

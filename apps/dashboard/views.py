@@ -4,14 +4,51 @@ from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import IntegrityError
 from django.http import HttpResponse
+from django.shortcuts import redirect
 from django.views.generic import TemplateView, DetailView
+import pandas as pd
 
-from .forms import UploadReportForm, ManualReportForm
+from .forms import UploadReportForm, ManualReportForm, UploadTabReportForm
 from .models import Report, Item
 from .tables import ReportTable
 from .utils import extract_pick_numbers_from_excel  # Assuming function is in utils.py
 
 
+class TabCompareView(LoginRequiredMixin, TemplateView):
+    template_name = "tab_compare.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["form"] = UploadTabReportForm()
+        context["missing_items"] = kwargs.get("missing_items", None)  # Pass missing items if exist
+        return context
+
+    def post(self, request, *args, **kwargs):
+        form = UploadTabReportForm(request.POST, request.FILES)
+        if form.is_valid():
+            file = form.cleaned_data['file']
+            try:
+                # Read specific sheets
+                fc_df = pd.read_excel(file, sheet_name="FC")
+                wms_df = pd.read_excel(file, sheet_name="WMS")
+
+                # Read FC first column and skip the first entry (header)
+                fc_items = fc_df.iloc[1:, 0].dropna().astype(str).str.strip().tolist()
+
+                # Same for WMS, flatten and clean
+                wms_items = pd.Series(wms_df.values.flatten()).dropna().astype(str).str.strip().tolist()
+
+                # Compare
+                missing_items = [item for item in fc_items if item not in wms_items]
+
+                # Pass missing items to context
+                return self.render_to_response(self.get_context_data(missing_items=missing_items))
+            except Exception as e:
+                messages.error(request, f"Error processing file: {e}")
+                return redirect('dashboard:tab_compare')  # Assuming your URL name is 'tab_compare'
+        else:
+            messages.error(request, "Invalid form submission.")
+            return redirect('dashboard:tab_compare')
 class DashboardView(LoginRequiredMixin, TemplateView):
     template_name = "dashboard.html"
 
