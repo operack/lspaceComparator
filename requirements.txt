@@ -9,3 +9,4 @@ django-tables2
 gunicorn
 dj-database-url
 psycopg2-binary
+pandas
