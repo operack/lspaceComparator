@@ -29,7 +29,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', False)
 ON_PRODUCTION = os.environ.get('ON_PRODUCTION', False)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG', False)
 
 ALLOWED_HOSTS = ['lspace-compare.operack.com', '127.0.0.1']
 
